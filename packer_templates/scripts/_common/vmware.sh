@@ -33,6 +33,10 @@ EOF
     mkdir /mnt/hgfs
     systemctl enable vmtoolsd
     systemctl start vmtoolsd
+  elif [ -f "/sbin/apk" ]; then
+    apk add --no-cache open-vm-tools open-vm-tools-openrc
+    rc-update add open-vm-tools boot
+    rc-service open-vm-tools start
   fi
   echo "platform specific vmware.sh executed"
 esac
