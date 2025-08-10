@@ -25,7 +25,7 @@ jobs:
           curl --connect-to softwareupdate-prod.broadcom.com:443:softwareupdate-prod.broadcom.com.cdn.cloudflare.net:443 https://softwareupdate-prod.broadcom.com/cds/vmw-desktop/ws/17.6.2/24409262/linux/core/VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar -o VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar
           tar -xvf VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar
           chmod +x VMware-Workstation-17.6.2-24409262.x86_64.bundle
-          sudo ./VMware-Workstation-17.6.2-24409262.x86_64.bundle --console --required
+          sudo ./VMware-Workstation-17.6.2-24409262.x86_64.bundle --console --required --eulas-agreed
           wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
           sudo apt update && sudo apt install vagrant
