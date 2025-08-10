@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@main
       - name: Install Vagrant VMware-fusion
         run: |
-          curl https://softwareupdate.vmware.com/cds/vmw-desktop/ws/17.6.2/24409262/linux/core/VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar -o VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar
+          curl --connect-to softwareupdate-prod.broadcom.com:443:softwareupdate-prod.broadcom.com.cdn.cloudflare.net:443 https://softwareupdate-prod.broadcom.com/cds/vmw-desktop/ws/17.6.2/24409262/linux/core/VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar -o VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar
           tar -xvf VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar
           chmod +x VMware-Workstation-17.6.2-24409262.x86_64.bundle
           sudo ./VMware-Workstation-17.6.2-24409262.x86_64.bundle --console --required
