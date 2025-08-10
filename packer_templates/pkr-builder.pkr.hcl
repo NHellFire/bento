@@ -124,6 +124,7 @@ locals {
                   ] : (
                   var.os_name == "alpinelinux" ? [
                     "${path.root}/scripts/alpinelinux/update.sh",
+                    "${path.root}/scripts/alpinelinux/base.sh",
                     "${path.root}/scripts/_common/motd.sh",
                     "${path.root}/scripts/_common/sshd.sh",
                     "${path.root}/scripts/alpinelinux/build-tools.sh",
