@@ -5,7 +5,12 @@ HOME_DIR="${HOME_DIR:-/home/vagrant}";
 
 case "$PACKER_BUILDER_TYPE" in
 virtualbox-iso|virtualbox-ovf)
-  if ! ([ "$(uname -m)" = "aarch64" ] && [ -f /etc/os-release ] && (grep -qi 'opensuse' /etc/os-release || grep -qi 'sles' /etc/os-release)); then
+  if [ "$(. /etc/os-release; echo $ID)" = "alpine" ]; then
+    echo "installing virtualbox-guest-additions for Alpine Linux"
+    apk add --no-cache virtualbox-guest-additions virtualbox-guest-additions-openrc
+    rc-update add virtualbox-guest-additions boot
+    rc-service virtualbox-guest-additions start
+  elif ! ([ "$(uname -m)" = "aarch64" ] && [ -f /etc/os-release ] && (grep -qi 'opensuse' /etc/os-release || grep -qi 'sles' /etc/os-release)); then
     ARCHITECTURE="$(uname -m)";
     VER="$(cat "$HOME_DIR"/.vbox_version)";
     ISO="VBoxGuestAdditions_$VER.iso";

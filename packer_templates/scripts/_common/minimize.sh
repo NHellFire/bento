@@ -4,14 +4,16 @@ case "$PACKER_BUILDER_TYPE" in
   qemu) exit 0 ;;
 esac
 
+df_sync=$(df --help 2>&1 | grep -q -- --sync && printf -- --sync || true)
+
 # Whiteout root
-count=$(df --sync -kP / | tail -n1  | awk -F ' ' '{print $4}')
+count=$(df $df_sync -kP / | tail -n1  | awk -F ' ' '{print $4}')
 count=$((count - 1))
 dd if=/dev/zero of=/tmp/whitespace bs=1M count=$count || echo "dd exit code $? is suppressed";
 rm /tmp/whitespace
 
 # Whiteout /boot
-count=$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{print $4}')
+count=$(df $df_sync -kP /boot | tail -n1 | awk -F ' ' '{print $4}')
 count=$((count - 1))
 dd if=/dev/zero of=/boot/whitespace bs=1M count=$count || echo "dd exit code $? is suppressed";
 rm /boot/whitespace

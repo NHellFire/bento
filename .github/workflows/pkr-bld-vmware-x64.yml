@@ -13,24 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - almalinux-8
-          - almalinux-9
-          - centos-stream-9
-          - centos-stream-10
-          - debian-11
-          - debian-12
-          - fedora-40
-          - fedora-41
-          - fedora-42
-          - freebsd-13
-          - freebsd-14
-          - opensuse-leap-15
-          - oraclelinux-8
-          - oraclelinux-9
-          - rockylinux-8
-          - rockylinux-9
-          - ubuntu-22.04
-          - ubuntu-24.04
+          - alpinelinux-3.21
+          - alpinelinux-3.22
         provider:
           - vmware-iso
     steps:
@@ -38,10 +22,10 @@ jobs:
         uses: actions/checkout@main
       - name: Install Vagrant VMware-fusion
         run: |
-          curl https://softwareupdate.vmware.com/cds/vmw-desktop/ws/17.6.2/24409262/linux/core/VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar -o VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar
+          curl --connect-to softwareupdate-prod.broadcom.com:443:softwareupdate-prod.broadcom.com.cdn.cloudflare.net:443 https://softwareupdate-prod.broadcom.com/cds/vmw-desktop/ws/17.6.2/24409262/linux/core/VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar -o VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar
           tar -xvf VMware-Workstation-17.6.2-24409262.x86_64.bundle.tar
           chmod +x VMware-Workstation-17.6.2-24409262.x86_64.bundle
-          sudo ./VMware-Workstation-17.6.2-24409262.x86_64.bundle --console --required
+          sudo ./VMware-Workstation-17.6.2-24409262.x86_64.bundle --console --required --eulas-agreed
           wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
           sudo apt update && sudo apt install vagrant
